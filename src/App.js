@@ -58,7 +58,8 @@ class App extends React.Component {
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" component={HomeView} />
-                <Route exact path="/requests_inventory" component={RequestAndInventoryView} />
+                <Route exact path="/tempdb" component={DashboardPage} />
+                <Route exact path="/request-inventory" component={RequestAndInventoryView} />
                 <Route exact path="/buttons" component={ButtonPage} />
                 <Route exact path="/cards" component={CardPage} />
                 <Route exact path="/widgets" component={WidgetPage} />
