@@ -1,15 +1,12 @@
 import React from 'react';
-
 import { Navbar, Nav, NavItem } from 'reactstrap';
-
-import SourceLink from 'components/SourceLink';
 
 const Footer = () => {
   return (
     <Navbar>
       <Nav navbar>
         <NavItem>
-          2018 Reduction theme, source on <SourceLink>Github</SourceLink>
+          COVID19 Demand Response. A open-source app for healthcare providers and volunteers to manage medical supply needs.
         </NavItem>
       </Nav>
     </Navbar>

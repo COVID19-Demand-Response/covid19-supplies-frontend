@@ -25,6 +25,7 @@ const TypographyPage = React.lazy(() => import('pages/TypographyPage'));
 const WidgetPage = React.lazy(() => import('pages/WidgetPage'));
 
 const HomeView = React.lazy(() => import('views/HomeView'));
+const RequestAndInventoryView = React.lazy(() => import('views/RequestAndInventoryView'));
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -57,6 +58,7 @@ class App extends React.Component {
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" component={HomeView} />
+                <Route exact path="/requests_inventory" component={RequestAndInventoryView} />
                 <Route exact path="/buttons" component={ButtonPage} />
                 <Route exact path="/cards" component={CardPage} />
                 <Route exact path="/widgets" component={WidgetPage} />

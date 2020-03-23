@@ -1,8 +1,8 @@
-import logo200Image from 'assets/img/logo/logo_200.png';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
-import SourceLink from 'components/SourceLink';
 import React from 'react';
-import { FaGithub } from 'react-icons/fa';
+import { faStethoscope, faChartPie, faIndustry, faUserShield, faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import {
   MdAccountCircle,
   MdArrowDropDownCircle,
@@ -10,14 +10,9 @@ import {
   MdBrush,
   MdChromeReaderMode,
   MdDashboard,
-  MdExtension,
   MdGroupWork,
-  MdInsertChart,
-  MdKeyboardArrowDown,
   MdNotificationsActive,
-  MdPages,
   MdRadioButtonChecked,
-  MdSend,
   MdStar,
   MdTextFields,
   MdViewCarousel,
@@ -34,8 +29,9 @@ import {
   Navbar,
   NavItem,
   NavLink as BSNavLink,
-  Row,
-  Col,
+  Card,
+  CardTitle,
+  CardBody
 } from 'reactstrap';
 import bn from 'utils/bemnames';
 
@@ -83,12 +79,11 @@ const pageContents = [
 ];
 
 const navItems = [
-  { to: '/', name: 'dashboard', exact: true, Icon: MdDashboard },
-  { to: '/supply-requests', name: 'supply requests', exact: false, Icon: MdWeb },
-  { to: '/inventories', name: 'inventories', exact: false, Icon: MdInsertChart },
-  { to: '/hcps', name: 'healthcare providers', exact: false, Icon: MdWidgets },
-  { to: '/volunteers', name: 'volunteers', exact: false, Icon: MdWidgets },
-  { to: '/admin', name: 'admin', exact: false, Icon: MdWidgets }
+  { to: '/', name: 'dashboard', exact: true, Icon: faChartPie },
+  { to: '/request-inventory', name: 'requests and inventory', exact: false, Icon: faExchangeAlt },
+  { to: '/hcps', name: 'healthcare providers', exact: false, Icon: faStethoscope },
+  { to: '/volunteers', name: 'volunteers', exact: false, Icon: faIndustry },
+  { to: '/admin', name: 'admin', exact: false, Icon: faUserShield }
 ];
 
 const bem = bn.create('sidebar');
@@ -114,11 +109,14 @@ class Sidebar extends React.Component {
     return (
       <aside className={bem.b()}>
         <div className={bem.e('content')}>
-          <Row>
-            <Col className="align-items-center navbar-brand text-white">
-                MHM
-            </Col>
-          </Row>
+          <Card
+              inverse
+              className={`border-0 bg-gradient-theme-top text-light`}
+            >
+              <CardBody className="d-flex flex-column justify-content-center align-items-center">
+                <CardTitle><h5>MHM</h5></CardTitle>
+              </CardBody>
+            </Card>
           <Nav vertical>
             {navItems.map(({ to, name, exact, Icon }, index) => (
               <NavItem key={index} className={bem.e('nav-item')}>
@@ -130,8 +128,8 @@ class Sidebar extends React.Component {
                   activeClassName="active"
                   exact={exact}
                 >
-                  <Icon className={bem.e('nav-item-icon')} />
-                  <span className="">{name}</span>
+                  <FontAwesomeIcon icon={Icon} />
+                  &nbsp;&nbsp; <span>{name}</span>
                 </BSNavLink>
               </NavItem>
             ))}

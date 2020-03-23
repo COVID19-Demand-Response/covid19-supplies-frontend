@@ -124,14 +124,21 @@ class AuthForm extends BaseComponent {
           <Label>Organization Name</Label>
           <Input type="text" name="org_name" value={this.state.userInfo.org_name} onChange={this.handleUserInfoChange}/>
         </FormGroup>
-        <FormGroup>
-          <Label>Address Line 1</Label>
-          <Input type="text" name="address_line1" value={this.state.userInfo.address_line1} onChange={this.handleUserInfoChange} />
-        </FormGroup>
-        <FormGroup>
-          <Label>Address Line 2</Label>
-          <Input type="text" name="address_line2" value={this.state.userInfo.address_line2} onChange={this.handleUserInfoChange} />
-        </FormGroup>
+
+        <Row>
+          <Col xl={6} lg={6} md={6}>
+            <FormGroup>
+              <Label>Address Line 1</Label>
+              <Input type="text" name="address_line1" value={this.state.userInfo.address_line1} onChange={this.handleUserInfoChange} />
+            </FormGroup>
+          </Col>
+          <Col xl={6} lg={6} md={6}>
+            <FormGroup>
+              <Label>Address Line 2</Label>
+              <Input type="text" name="address_line2" value={this.state.userInfo.address_line2} onChange={this.handleUserInfoChange} />
+            </FormGroup>
+          </Col>
+        </Row>
         <FormGroup>
           <Row>
             <Col xl={4} lg={4} md={4}>
@@ -167,12 +174,18 @@ class AuthForm extends BaseComponent {
             </FormGroup>
           </Col>
         </Row>
-        <FormGroup>
-          <Label>Email</Label>
-          <Input type="email" name="email" value={this.state.userInfo.email} onChange={this.handleUserInfoChange} />
-          <Label>Alternate Email</Label>
-          <Input type="email" name="alternate_email" value={this.state.userInfo.alternate_email} onChange={this.handleUserInfoChange} />
-        </FormGroup>
+        <Row>
+          <Col xl={6} lg={6} md={6}>
+            <FormGroup>
+              <Label>Email</Label>
+              <Input type="email" name="email" value={this.state.userInfo.email} onChange={this.handleUserInfoChange} />
+            </FormGroup>
+            </Col>
+            <Col xl={6} lg={6} md={6}>
+              <Label>Alternate Email</Label>
+              <Input type="email" name="alternate_email" value={this.state.userInfo.alternate_email} onChange={this.handleUserInfoChange} />
+          </Col>
+        </Row>
 
         <Row>
           <Col xl={6} lg={6} md={6}>

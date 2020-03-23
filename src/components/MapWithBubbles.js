@@ -22,9 +22,9 @@ class BubbleMap extends Component {
   };
 
   render() {
-    // const primaryColor = getColor('primary');
+    const primaryColor = getColor('primary');
     const secondaryColor = getColor('secondary');
-    const lightColor = getColor('light');
+    const lightColor = getColor('gray');
 
     return (
       <ComposableMap
