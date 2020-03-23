@@ -12,9 +12,9 @@ export class AuthenticationService extends BaseService {
     });
 
     return responseSubject;
-} 
+  } 
 
   static logout() {
-      
+    AuthenticationService.getAppContext().userContext = {};
   }
 }
