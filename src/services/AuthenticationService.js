@@ -20,4 +20,13 @@ export class AuthenticationService extends BaseService {
     AuthenticationService.getAppContext().token = {};
     axios.defaults.headers.common['Authorization'] = null;
   }
+
+  static isAuthenticated() {
+    if(axios.defaults.headers.common['Authorization'] && 
+      axios.defaults.headers.common['Authorization'].startsWith('Bearer')) {
+      return true;
+    }
+
+    return false;
+  }
 }

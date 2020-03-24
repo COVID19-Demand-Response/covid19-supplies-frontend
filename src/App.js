@@ -7,6 +7,7 @@ import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './styles/reduction.scss';
 import SignupView from './views/SignupView';
 import LoginView from './views/LoginView';
+import PrivateRoute from './components/PrivateRoute';
 
 const AlertPage = React.lazy(() => import('pages/AlertPage'));
 const BadgePage = React.lazy(() => import('pages/BadgePage'));
@@ -57,11 +58,11 @@ class App extends React.Component {
 
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
-                <Route exact path="/" component={HomeView} />
-                <Route exact path="/tempdb" component={DashboardPage} />
-                <Route exact path="/request-inventory" component={RequestAndInventoryView} />
-                <Route exact path="/buttons" component={ButtonPage} />
-                <Route exact path="/cards" component={CardPage} />
+                <PrivateRoute exact path="/" component={HomeView} />
+                <PrivateRoute exact path="/tempdb" component={DashboardPage} />
+                <PrivateRoute exact path="/request-inventory" component={RequestAndInventoryView} />
+                <PrivateRoute exact path="/buttons" component={ButtonPage} />
+                <PrivateRoute exact path="/cards" component={CardPage} />
                 <Route exact path="/widgets" component={WidgetPage} />
                 <Route exact path="/typography" component={TypographyPage} />
                 <Route exact path="/alerts" component={AlertPage} />

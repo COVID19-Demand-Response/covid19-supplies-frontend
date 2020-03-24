@@ -165,8 +165,8 @@ class InventoryForm extends BaseComponent {
         </Form>
         <hr/>
           <div className="d-flex justify-content-end">
-            <Button className="text-uppercase border-0" outline onClick={this.saveInventory}>
-              <FontAwesomeIcon size='md' icon={faSave} className='text-bold'/>&nbsp;&nbsp;{this.state.isNew ? 'Create' : 'Save'}
+            <Button color="info" className="text-uppercase border-0" outline onClick={this.saveInventory}>
+              <FontAwesomeIcon size='md' icon={faSave} className='text-bold'/>&nbsp;&nbsp;{this.state.isNew ? 'Add' : 'Save'}
             </Button>
           </div>
       </div>

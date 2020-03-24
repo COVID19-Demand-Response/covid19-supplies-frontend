@@ -56,7 +56,8 @@ class AuthForm extends BaseComponent {
   registerUser = event => {
     event.preventDefault();
     this.validate();
-    console.log(this.state.userInfo);
+    this.state.userInfo.user_name = this.state.userInfo.email;
+    
     UserService.registerUser(this.state.userInfo).subscribe(resp => {
       if(resp.status === true) {
         this.setState({...this.state, registrationSuccess: true});
