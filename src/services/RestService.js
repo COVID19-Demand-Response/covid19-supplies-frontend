@@ -3,6 +3,7 @@ import { from } from "rxjs";
 import { BaseService } from './BaseService';
 
 export class RestService extends BaseService {
+  
   static get(url, options) {
     if (!options || !options.absolute) {
       url = this.getBaseUrl() + "/" + url;

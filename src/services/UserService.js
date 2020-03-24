@@ -13,5 +13,3 @@ export class UserService extends BaseService {
         return responseSubject;
     }
 }
-
-export default UserService;

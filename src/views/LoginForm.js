@@ -49,7 +49,7 @@ class AuthForm extends BaseComponent {
   render() {
     
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.login}>
         {
           <div className="text-center pb-4">
             <h5 className="p-2 text-light bg-gradient-secondary-theme-right">COVID19 Demand Response</h5>

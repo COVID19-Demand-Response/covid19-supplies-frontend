@@ -11,19 +11,46 @@ import {
   Col,
   Row,
   Table,
-  FormGroup
+  FormGroup,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalFooter
 } from 'reactstrap';
 import { getColor } from 'utils/colors';
 import { BaseComponent } from '../components/BaseComponent';
-import { faStethoscope, faIndustry, faCartPlus, faShippingFast, faPlusSquare, faPlusCircle, faList } from '@fortawesome/free-solid-svg-icons';
+import { faStethoscope, faIndustry, faCartPlus, faShippingFast, faPlusSquare, faPlusCircle, faList, faSave, faCross, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Typography from '../components/Typography';
+import SupplyRequestForm from './SupplyRequestForm';
+import { SupplyRequestService } from '../services/SupplyRequestService';
 
 class RequestAndInventoryView extends BaseComponent {
+
+  constructor(props) {
+    super(props);
+    this.state = { ...this.state,
+      supplyRequestModal: false
+    };
+    this.supplyRequestModal = this.supplyRequestModal.bind(this);
+    this.toggleSupplyRequestModal = this.toggleSupplyRequestModal.bind(this);
+  }
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
   }
+
+  supplyRequestModal(isNew) {
+    this.setState({...this.state, isNew: isNew, supplyRequestModal: true});
+  }
+
+  toggleSupplyRequestModal= modalType => () => {
+    if (!modalType) {
+      return this.setState({ ...this.state,
+        supplyRequestModal: !this.state.supplyRequestModal,
+      });
+    }
+  };
 
   render() {
     return (
@@ -45,8 +72,8 @@ class RequestAndInventoryView extends BaseComponent {
                         <FormGroup inline check>
                             <Input type="checkbox" /> My Supply Requests
                         </FormGroup>
-                        <Button className="text-uppercase" outline>
-                        <FontAwesomeIcon size='lg' icon={faPlusCircle} className='text-bold' />&nbsp;Add
+                        <Button className="text-uppercase" outline onClick={() => {this.supplyRequestModal(true);}}>
+                        <FontAwesomeIcon size='lg' icon={faPlusCircle} className='text-bold'/>&nbsp;Add
                         </Button>
                     </span>
                 </div>
@@ -119,7 +146,7 @@ class RequestAndInventoryView extends BaseComponent {
                             <Input type="checkbox" /> My Inventories
                         </FormGroup>
                         <Button color="info" className="text-uppercase" outline>
-                        <FontAwesomeIcon size='lg' icon={faPlusCircle} className='text-bold' />&nbsp;Add
+                        <FontAwesomeIcon size='lg' icon={faPlusCircle} className='text-bold'/>&nbsp;Add
                         </Button>
                     </span>
                 </div>
@@ -178,6 +205,15 @@ class RequestAndInventoryView extends BaseComponent {
           </Col>
         </Row>
         
+
+        <Modal
+          isOpen={this.state.supplyRequestModal}
+          toggle={this.toggleSupplyRequestModal()}>
+          <ModalHeader toggle={this.toggleSupplyRequestModal()}>Supply Request</ModalHeader>
+          <ModalBody>
+            <SupplyRequestForm supplyRequest = {{}} isNew = {this.state.isNew} />
+          </ModalBody>
+        </Modal>
       </Page>
     );
   }

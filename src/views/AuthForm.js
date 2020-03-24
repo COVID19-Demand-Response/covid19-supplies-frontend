@@ -72,7 +72,7 @@ class AuthForm extends BaseComponent {
   render() {
     
     return (
-      <Form onSubmit={this.handleSubmit}>
+      <Form onSubmit={this.registerUser}>
         {
           <div className="text-center pb-4">
             <h5 className="p-2 text-light bg-gradient-secondary-theme-right">Register</h5>
