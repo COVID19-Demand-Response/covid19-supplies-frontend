@@ -23,7 +23,8 @@ import { faStethoscope, faIndustry, faCartPlus, faShippingFast, faPlusSquare, fa
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Typography from '../components/Typography';
 import SupplyRequestForm from './SupplyRequestForm';
-import { SupplyRequestService } from '../services/SupplyRequestService';
+import InventoryForm from './InventoryForm';
+
 
 class RequestAndInventoryView extends BaseComponent {
 
@@ -33,6 +34,7 @@ class RequestAndInventoryView extends BaseComponent {
       supplyRequestModal: false
     };
     this.supplyRequestModal = this.supplyRequestModal.bind(this);
+    this.inventoryModal = this.inventoryModal.bind(this);
     this.toggleSupplyRequestModal = this.toggleSupplyRequestModal.bind(this);
   }
   componentDidMount() {
@@ -41,13 +43,25 @@ class RequestAndInventoryView extends BaseComponent {
   }
 
   supplyRequestModal(isNew) {
-    this.setState({...this.state, isNew: isNew, supplyRequestModal: true});
+    this.setState({...this.state, isNewSupplyRequest: isNew, supplyRequestModal: true});
+  }
+
+  inventoryModal(isNew) {
+    this.setState({...this.state, isNewInventory: isNew, inventoryModal: true});
   }
 
   toggleSupplyRequestModal= modalType => () => {
     if (!modalType) {
       return this.setState({ ...this.state,
         supplyRequestModal: !this.state.supplyRequestModal,
+      });
+    }
+  };
+
+  toggleInventoryModal= modalType => () => {
+    if (!modalType) {
+      return this.setState({ ...this.state,
+        inventoryModal: !this.state.inventoryModal,
       });
     }
   };
@@ -145,7 +159,7 @@ class RequestAndInventoryView extends BaseComponent {
                         <FormGroup inline check>
                             <Input type="checkbox" /> My Inventories
                         </FormGroup>
-                        <Button color="info" className="text-uppercase" outline>
+                        <Button color="info" className="text-uppercase" outline onClick={() => {this.inventoryModal(true);}}>
                         <FontAwesomeIcon size='lg' icon={faPlusCircle} className='text-bold'/>&nbsp;Add
                         </Button>
                     </span>
@@ -205,13 +219,21 @@ class RequestAndInventoryView extends BaseComponent {
           </Col>
         </Row>
         
-
         <Modal
           isOpen={this.state.supplyRequestModal}
           toggle={this.toggleSupplyRequestModal()}>
           <ModalHeader toggle={this.toggleSupplyRequestModal()}>Supply Request</ModalHeader>
           <ModalBody>
-            <SupplyRequestForm supplyRequest = {{}} isNew = {this.state.isNew} />
+            <SupplyRequestForm supplyRequest = {{}} isNew = {this.state.isNewSupplyRequest} />
+          </ModalBody>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.inventoryModal}
+          toggle={this.toggleInventoryModal()}>
+          <ModalHeader toggle={this.toggleInventoryModal()}>Inventory</ModalHeader>
+          <ModalBody>
+            <InventoryForm inventory = {{}} isNew = {this.state.isNewInventory} />
           </ModalBody>
         </Modal>
       </Page>
