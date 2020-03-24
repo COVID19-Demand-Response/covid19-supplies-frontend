@@ -39,4 +39,13 @@ export class SupplyRequestService extends BaseService {
 
     return responseSubject;
   }
+
+  static search(criteria) {
+    let responseSubject = new Subject();
+    RestService.post("supplyRequests/search", criteria).subscribe(resp => {
+      responseSubject.next(resp);
+    });
+
+    return responseSubject;
+  }
 }

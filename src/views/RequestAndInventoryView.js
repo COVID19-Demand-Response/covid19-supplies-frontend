@@ -1,6 +1,12 @@
+import React from 'react';
 import Page from 'components/Page';
 import { withRouter } from 'react-router-dom';
-import React from 'react';
+import { AgGridReact, AgGridColumn } from 'ag-grid-react';
+import { SupplyRequestService } from '../services/SupplyRequestService';
+import { InventoryService } from '../services/InventoryService';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-material.css';
 
 import {
   Input,
@@ -31,15 +37,76 @@ class RequestAndInventoryView extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = { ...this.state,
-      supplyRequestModal: false
+      supplyRequestModal: false,
+      supplyRequestSearch: {
+        "sort": {
+          "request_date": -1
+        },
+        "page": 1,
+        "pageSize": 10
+      },
+      inventorySearch: {
+        "sort": {
+          "created_date": -1
+        },
+        "page": 1,
+        "pageSize": 10
+      },
+      supplyRequestTableColumnDefs: [
+        { headerName: "Name", field: "org_name", filter: true, sortable: true, resizable: true },
+        { headerName: "Supply Type", field: "supply_type", filter: true, sortable: true, resizable: true },
+        { headerName: "Quantity", field: "quantity", filter: true, sortable: true, resizable: true },
+        { headerName: "Urgency", field: "urgency", filter: true, sortable: true, resizable: true },
+        { headerName: "Needed By", field: "needed_by", filter: true, sortable: true, resizable: true },
+        { headerName: "Request Date", field: "request_date", filter: true, sortable: true, resizable: true },
+        { headerName: "Status", field: "status", filter: true, sortable: true, resizable: true }
+      ],
+      inventoryTableColumnDefs: [
+        { headerName: "Name", field: "org_name", filter: true, sortable: true, resizable: true },
+        { headerName: "Supply Type", field: "supply_type", filter: true, sortable: true, resizable: true },
+        { headerName: "Quantity", field: "quantity", filter: true, sortable: true, resizable: true },
+        { headerName: "Status", field: "status", filter: true, sortable: true, resizable: true }
+      ],
+      supplyRequestData: [],
+      inventoryData: [],
+      supplyRequestDetail: {},
+      inventoryDetail: {}
     };
     this.supplyRequestModal = this.supplyRequestModal.bind(this);
     this.inventoryModal = this.inventoryModal.bind(this);
     this.toggleSupplyRequestModal = this.toggleSupplyRequestModal.bind(this);
+    this.onSRGridReady = this.onSRGridReady.bind(this);
+    this.onInventoryGridReady = this.onInventoryGridReady.bind(this);
   }
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
+  }
+
+  onSRGridReady(params) {
+    this.setState({...this.state, supplyRequestTableApi: params.api});
+    // Load supply requests
+    SupplyRequestService.search(this.state.supplyRequestSearch).subscribe(resp => {
+      if(resp.status === true) {
+        this.setState({...this.state, supplyRequestData: resp.data});
+        params.api.sizeColumnsToFit();
+      } else {
+        // Show error message
+      }
+    });
+  }
+
+  onInventoryGridReady(params) {
+    this.setState({...this.state, inventoryTableApi: params.api});
+    // Load inventories
+    InventoryService.search(this.state.inventorySearch).subscribe(resp => {
+      if(resp.status === true) {
+        this.setState({...this.state, inventoryData: resp.data});
+        params.api.sizeColumnsToFit();
+      } else {
+        // Show error message
+      }
+    });
   }
 
   supplyRequestModal(isNew) {
@@ -93,40 +160,13 @@ class RequestAndInventoryView extends BaseComponent {
                 </div>
             </CardHeader>
             <CardBody>
-                <Table>
-                    <thead>
-                        <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Supply Type</th>
-                        <th>Quantity</th>
-                        <th>Urgency</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>UC Medical Center</td>
-                        <td>Masks</td>
-                        <td>120</td>
-                        <td>High</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>UC Medical Center</td>
-                        <td>Gloves</td>
-                        <td>345</td>
-                        <td>High</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>UC Medical Center</td>
-                        <td>Face Shields</td>
-                        <td>200</td>
-                        <td>Medium</td>
-                        </tr>
-                    </tbody>
-                </Table>
+              <div className="ag-theme-material" style={ {height: '300px', width: '100%'} }>
+                <AgGridReact
+                    onGridReady={this.onSRGridReady}
+                    rowData={this.state.supplyRequestData}
+                    columnDefs={this.state.supplyRequestTableColumnDefs}>
+                </AgGridReact>
+              </div>
             </CardBody>
             </Card>
           </Col>
@@ -166,40 +206,13 @@ class RequestAndInventoryView extends BaseComponent {
                 </div>
             </CardHeader>
             <CardBody>
-                <Table>
-                    <thead>
-                        <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Supply Type</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Masks</td>
-                        <td>120</td>
-                        <td>In Progress</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>UC Medical Center</td>
-                        <td>Steve</td>
-                        <td>500</td>
-                        <td>Ready</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>XYZ Supplies</td>
-                        <td>Face Shields</td>
-                        <td>130</td>
-                        <td>Ready</td>
-                        </tr>
-                    </tbody>
-                </Table>
+              <div className="ag-theme-material" style={ {height: '300px', width: '100%'} }>
+                <AgGridReact
+                    onGridReady={this.onInventoryGridReady}
+                    rowData={this.state.inventoryData}
+                    columnDefs={this.state.inventoryTableColumnDefs}>
+                </AgGridReact>
+              </div>
             </CardBody>
             </Card>
           </Col>

@@ -39,4 +39,12 @@ export class InventoryService extends BaseService {
 
     return responseSubject;
   }
+  static search(criteria) {
+    let responseSubject = new Subject();
+    RestService.post("inventory/search", criteria).subscribe(resp => {
+      responseSubject.next(resp);
+    });
+
+    return responseSubject;
+  }
 }

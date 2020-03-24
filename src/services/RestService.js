@@ -9,7 +9,7 @@ export class RestService extends BaseService {
       url = this.getBaseUrl() + "/" + url;
     }
     return from(
-      axios.get(url).then(res => {
+      axios.get(url, { params: options}).then(res => {
         return res.data;
       }).catch(err => {
         return err;
