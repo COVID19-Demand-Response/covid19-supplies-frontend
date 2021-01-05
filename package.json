@@ -9,7 +9,7 @@
     "@fortawesome/react-fontawesome": "^0.1.9",
     "ag-grid-community": "^23.0.1",
     "ag-grid-react": "^23.0.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "4.3.1",
     "chart.js": "2.7.2",
     "classnames": "^2.2.6",
